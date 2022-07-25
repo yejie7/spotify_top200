@@ -5,11 +5,12 @@ col_weekly = ['rank', 'uri', 'artist_names','track_name', 'source',
               'peak_rank', 'previous_rank', 'weeks_on_chart', 'streams', 'date',
               'country', 'continent', 'language']
 
-directory = 'regionals/weekly_global'
-country = 'Global'
-continent = 'Global'
-language = 'Global'
+directory = 'directory_name'
+country = 'country_name'
+continent = 'region_name'
+language = 'language_name'
 
+#combine all csv files in the directory to one
 def weekly_concat(directory):
     
     directory = directory
@@ -30,7 +31,7 @@ def weekly_concat(directory):
             df_week['language'] = language
             df = pd.concat([df,df_week])
 
-    df.to_csv('regionals_concat/weekly_global.csv')
+    df.to_csv('file_name')
 
     return None
 
