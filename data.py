@@ -7,8 +7,8 @@ import random
 import time
 import sys
 
-cid = '65ec98f08d5d4dc693050ec93a1d02bb'
-secret = '3a8cb12b3b7248f08cdf4ed2bf4a6785'
+cid = 'your_client'
+secret = 'your_secret'
 
 client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
 sp = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
@@ -51,7 +51,7 @@ col1 = ['uri',
 
 genres_list = []
 
-
+#get audio features for the songs in the dataframe
 def get_audio_features(df):
     
     tids = list(df['uri'])
@@ -68,9 +68,8 @@ def get_audio_features(df):
         index += 100
 
     print('audio queries done')
-    features = [{'danceability': None, 'energy': None, 'key': None, 'loudness': None, 'mode': None, 'speechiness': None, 'acousticness': None, 'instrumentalness': None, 'liveness': None, 'valence': None, 'tempo': None, 'type': 'audio_features', 'id': '', 'uri': '', 'track_href': '', 'analysis_url': '', 'duration_ms': None, 'time_signature': None} if v is None else v for v in features]
-    #print(features)
-    
+
+    features = [{'danceability': None, 'energy': None, 'key': None, 'loudness': None, 'mode': None, 'speechiness': None, 'acousticness': None, 'instrumentalness': None, 'liveness': None, 'valence': None, 'tempo': None, 'type': 'audio_features', 'id': '', 'uri': '', 'track_href': '', 'analysis_url': '', 'duration_ms': None, 'time_signature': None} if v is None else v for v in features]  
     features_df = pd.DataFrame(features)
     df['danceability'] = features_df['danceability']
     df['energy'] = features_df['energy']
@@ -87,6 +86,7 @@ def get_audio_features(df):
     
     return df
 
+#get track items through Spotify API
 def get_tracks(tids):
     
     index = 0
@@ -105,6 +105,7 @@ def get_tracks(tids):
 
     return features
 
+#append track features from the track items to the dataframe, and split songs with more than one artists
 def get_track_features_pivot(df, features):
 
     df = df
@@ -141,6 +142,7 @@ def get_track_features_pivot(df, features):
             
     return df
 
+#delete the orginal data of the songs that were split up in get_track_features_pivot
 def delete_collab(df):
 
     df = df
@@ -158,6 +160,7 @@ def delete_collab(df):
         
     return df
 
+#get artist items through Spotify API
 def get_artists(artist_ids):
     
     artist_ids = artist_ids
@@ -178,6 +181,7 @@ def get_artists(artist_ids):
     
     return features
 
+#append artist features from artist items to the dataframe
 def get_artist_features(df, features):
 
     df = df
@@ -188,14 +192,12 @@ def get_artist_features(df, features):
         artist_id = artist_ids[i]
         if feature: 
             genre = 0 
-            #print(feature)
             genres = random.sample(feature['genres'], len(feature['genres']))
             index = 0 
             while index < len(genres):
                 if genres[index] in genres_list:
                     genre = genres[index]
                     df.loc[i, 'artist_genre'] = genre
-                    #print(genre, 'genre')
                     break
                 else:
                     index += 1 
@@ -207,12 +209,21 @@ def get_artist_features(df, features):
                 
             if len(feature['images']) > 0:
                 df.loc[i, 'artist_img'] = feature['images'][0]['url']
-        #print(df.loc[[i]])
+     
         print(i)
             
     return df
 
-country_list = ['morocco']
+country_list = ['costarica', 'cyprus', 'czech', 'denmark', 'dominican_republic', 
+                'ecuador', 'egypt', 'el_salvador', 'estonia', 'finland', 'france', 
+                'germany', 'greece', 'guatemala', 'honduras', 'hongkong', 'hungary',
+                'iceland', 'india'. 'indonesia', 'ireland', 'israel', 'italy', 'japan', 
+                'kazakhstan', 'korea', 'latvia', 'lithuania', 'luxembourg', 'malaysia', 
+                'mexico', 'morocco', 'netherlands', 'new_zealand', 'nicaragua', 'nigeria',
+                'norway', 'pakistan', 'panama', 'paraguay', 'peru', 'philippines',
+                'poland', 'portugal', 'romania', 'saudi_arabia', 'singapore', 'slovakia', 
+                'south_africa', 'spain', 'sweden', 'switzerland', 'taiwan', 'thailand', 
+                'turkey', 'uae', 'uk', 'ukraine', 'uruguay', 'us', 'venezuela', 'vietnam'] 
 
 for country in country_list:
 
