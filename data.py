@@ -217,7 +217,7 @@ def get_artist_features(df, features):
 country_list = ['costarica', 'cyprus', 'czech', 'denmark', 'dominican_republic', 
                 'ecuador', 'egypt', 'el_salvador', 'estonia', 'finland', 'france', 
                 'germany', 'greece', 'guatemala', 'honduras', 'hongkong', 'hungary',
-                'iceland', 'india'. 'indonesia', 'ireland', 'israel', 'italy', 'japan', 
+                'iceland', 'india', 'indonesia', 'ireland', 'israel', 'italy', 'japan', 
                 'kazakhstan', 'korea', 'latvia', 'lithuania', 'luxembourg', 'malaysia', 
                 'mexico', 'morocco', 'netherlands', 'new_zealand', 'nicaragua', 'nigeria',
                 'norway', 'pakistan', 'panama', 'paraguay', 'peru', 'philippines',
